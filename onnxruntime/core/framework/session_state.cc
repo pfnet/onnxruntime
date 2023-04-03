@@ -423,12 +423,8 @@ Status SessionState::PrepackConstantInitializedTensors(InlinedHashMap<std::strin
                 bool is_packed = false;
                 const Tensor& const_initialized_tensor = constant_initialized_tensors[ort_value_idx].Get<Tensor>();
 
-                auto iter = initializers_to_share_map.find(input_name);
-                bool is_shared_initializer = (iter != initializers_to_share_map.end());
-                is_shared_initializer = true; // Always try to share
-
                 // Caching pre-packed weights is limited to shared initializers associated with the CPU EP for now
-                if (is_shared_initializer && should_cache_prepacked_weights_for_shared_initializers &&
+                if (should_cache_prepacked_weights_for_shared_initializers &&
                     node.GetExecutionProviderType() == kCpuExecutionProvider) {  // caching of pre-packed weights' turned ON
 
                   AllocatorPtr allocator_for_caching = prepacked_weights_container_->GetOrCreateAllocator(CPU);
