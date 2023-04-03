@@ -425,6 +425,7 @@ Status SessionState::PrepackConstantInitializedTensors(InlinedHashMap<std::strin
 
                 auto iter = initializers_to_share_map.find(input_name);
                 bool is_shared_initializer = (iter != initializers_to_share_map.end());
+                is_shared_initializer = true; // Always try to share
 
                 // Caching pre-packed weights is limited to shared initializers associated with the CPU EP for now
                 if (is_shared_initializer && should_cache_prepacked_weights_for_shared_initializers &&
